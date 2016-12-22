@@ -59,11 +59,11 @@ public class NlpTools {
 							result = "nz";
 							break;
 						case 'l':
-							result = "in";
+							result = "nz";
 							break;
-						case 'g':
-							result = "gn";
-							break;
+						// case 'g':
+						// 	result = "gn";
+						// 	break;
 						default:
 							result = "n";
 					}
@@ -96,28 +96,29 @@ public class NlpTools {
 				result = "u";
 				break;
 			case 'v':
-				switch (originTag) {
-					case "vshi":
-						result = "vt";
-						break;
-					case "vyou":
-						result = "vt";
-						break;
-					case "vf":
-						result = "vd";
-						break;
-					case "vi":
-						result = "vi";
-						break;
-					case "vl":
-						result = "iv";
-						break;
-					case "vg":
-						result = "gv";
-						break;
-					default:
-						result = "v";
-				}
+				result = "v";
+				// switch (originTag) {
+				// 	case "vshi":
+				// 		result = "vt";
+				// 		break;
+				// 	case "vyou":
+				// 		result = "vt";
+				// 		break;
+				// 	case "vf":
+				// 		result = "vd";
+				// 		break;
+				// 	case "vi":
+				// 		result = "vi";
+				// 		break;
+				// 	case "vl":
+				// 		result = "iv";
+				// 		break;
+				// 	case "vg":
+				// 		result = "gv";
+				// 		break;
+				// 	default:
+				// 		result = "v";
+				// }
 				break;
 			case 'w':
 				result = "wp";

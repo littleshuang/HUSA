@@ -3,10 +3,7 @@ package tools;
 import com.sun.javafx.beans.annotations.NonNull;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,7 +41,7 @@ public class FileTools {
 			if (directory.isDirectory()) {
 				files = directory.listFiles();
 				for (File file : files) {
-					dataList.addAll(readDataFromFile(file));
+					dataList.addAll(readDataToList(file));
 				}
 			} else {
 				log(directory.getName() + "is not exist or is not a directory");
@@ -56,8 +53,8 @@ public class FileTools {
 	}
 
 	// 从目录代表的文件中读取数据
-	public static List<String> readDataFromFile(@NonNull String fileName) {
-		return readDataFromFile(new File(fileName));
+	public static List<String> readDataToList(@NonNull String fileName) {
+		return readDataToList(new File(fileName));
 	}
 
 	/**
@@ -66,7 +63,7 @@ public class FileTools {
 	 * @param file 文件名
 	 * @return 数据列表
 	 */
-	public static List<String> readDataFromFile(@NonNull File file) {
+	public static List<String> readDataToList(@NonNull File file) {
 		List<String> dataList = new ArrayList<>();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
@@ -137,6 +134,22 @@ public class FileTools {
 					writer.write(t.toString());
 					writer.write(seperator);
 					writer.write(map.get(t).toString());
+					writer.newLine();
+				}
+			}
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			log(e.getStackTrace());
+		}
+	}
+
+	public static <T> void writeCollectionToFile(@NonNull String file, @NonNull Collection<T> collection) {
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+			for (T t : collection) {
+				if (newTrim(t.toString()).length() > 0) {
+					writer.write(t.toString());
 					writer.newLine();
 				}
 			}

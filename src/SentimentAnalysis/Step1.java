@@ -3,13 +3,12 @@ package SentimentAnalysis;
 import NLP.Ictclas;
 import NLP.Ltp;
 import beans.ConjWord;
-import beans.Sentence;
+import beans.Segment;
 import com.sun.javafx.beans.annotations.NonNull;
 
 import java.util.*;
 
-import static common.Constants.BLANK;
-import static common.Constants.ROOT;
+import static common.Constants.*;
 import static common.WriteSentence.*;
 import static tools.CommonTools.copyList;
 import static tools.CommonTools.sortMapByValue;
@@ -35,8 +34,9 @@ public class Step1 {
 		String wordSegWithTagFile = root + "/wordSegmentWithTag.txt";    // 含词性标注的分词
 		String sentiWordsFile = root + "/selectedWords.txt";            // adj adv n v
 		String wordFile = root + "/words.txt";            // 词汇
+		String wordSpeechFile = root + "/wordSpeech.txt";            // 词汇
 		String timeFile = root + "/timeCost.txt";            // 记录时间消耗
-		// String tmpFile = root + "/tmp.txt";            // 记录时间消耗
+		// String tmpFile = root + "/tmp.txt";            // 临时文件
 
 		log("Begin");
 		log("Step 1: 读取数据 & 分句");
@@ -48,7 +48,7 @@ public class Step1 {
 		writeListToFile(sentencesFile, sentencesList);
 
 		log("Step 2: 连词分句");
-		List<Sentence> sentenceList = step1.segSentenceByConj(sentencesList);
+		List<Segment> sentenceList = step1.segSentenceByConj(sentencesList);
 		writeSentenceInfo(sentenceByConjFile, sentenceList, CONTENT);
 
 		log("Step 3: 分词");
@@ -60,9 +60,12 @@ public class Step1 {
 		writeSentenceInfo(sentiWordsFile, sentenceList, SENTIWORDS);
 
 		log("Step 5: 获取词汇集合");
-		Map<String, Integer> wordMap = step1.genWordSet(sentenceList);
-		Map<String, String> sortedWordMap = step1.sortWord(wordMap);
-		writeMapToFile(wordFile, sortedWordMap);
+		// Map<String, Integer> wordMap = step1.genWordSet(sentenceList);
+		// Map<String, String> sortedWordMap = step1.sortWord(wordMap);
+		Map<String, String> wordSpeechMap = new HashMap<>();
+		Map<String, Integer> wordMap = step1.genWordSet(sentenceList, wordSpeechMap);
+		writeMapToFile(wordSpeechFile, wordSpeechMap);
+		writeCollectionToFile(wordFile, wordMap.keySet());
 	}
 
 	// 标点分句
@@ -133,8 +136,8 @@ public class Step1 {
 	 * @param sentencesList：待分句的句子
 	 * @return 句子列表
 	 */
-	private List<Sentence> segSentenceByConj(List<String> sentencesList) {
-		List<Sentence> resultList = new ArrayList<>();
+	private List<Segment> segSentenceByConj(List<String> sentencesList) {
+		List<Segment> resultList = new ArrayList<>();
 
 		for (String sentence : sentencesList) {
 			if (sentence.length() > 0) {
@@ -150,31 +153,31 @@ public class Step1 {
 	 * @param sentences：待分句的句子
 	 * @return 句子列表
 	 */
-	private List<Sentence> segSentenceByConj(String sentences) {
+	private List<Segment> segSentenceByConj(String sentences) {
 		List<ConjWord> conjList = addAllConjunctions();        // 所有连词
-		List<Sentence> sentenceList = new ArrayList<>();
+		List<Segment> sentenceList = new ArrayList<>();
 		Map<Integer, ConjWord> conjWordMap = sentencesConjs(sentences, conjList);        // 句子连词索引
 
 		String tmp;
 		if (conjWordMap.size() == 0) {
 			// 句中不含连词
-			sentenceList.add(new Sentence(id++ + "", sentences));
+			sentenceList.add(new Segment(id++ + "", sentences));
 		} else {
 			// 句中包含连词
-			Sentence sentence;
+			Segment sentence;
 			Iterator iterator = conjWordMap.keySet().iterator();
 			int nextBegin = (int) iterator.next();      // 下一句起始位置
 			ConjWord lastConj = conjWordMap.get(nextBegin);      // 上一个连词
 			String first = sentences.substring(0, nextBegin);    // 第一句话
 			if (first.length() > 0) {
 				// 不以连词开始
-				sentenceList.add(new Sentence(id++ + "", first));
+				sentenceList.add(new Segment(id++ + "", first));
 			}
 			while (iterator.hasNext()) {
 				int nextEnd = (int) iterator.next();
 				tmp = sentences.substring(nextBegin + lastConj.getWord().length(), nextEnd);
 				if (tmp.length() > 0) {
-					sentence = new Sentence(id++ + "", tmp);
+					sentence = new Segment(id++ + "", tmp);
 					sentence.setFrontConj(lastConj.getType());
 					sentenceList.add(sentence);
 				}
@@ -184,7 +187,7 @@ public class Step1 {
 			// 最后一句话
 			tmp = sentences.substring(nextBegin + lastConj.getWord().length());
 			if (tmp.length() > 0) {
-				sentence = new Sentence(id++ + "", tmp);
+				sentence = new Segment(id++ + "", tmp);
 				sentence.setFrontConj(lastConj.getType());
 				sentenceList.add(sentence);
 			}
@@ -193,12 +196,12 @@ public class Step1 {
 	}
 
 	// 设置句子的上下句
-	public void setBeforeNext(List<Sentence> sentences) {
+	public void setBeforeNext(List<Segment> sentences) {
 		for (int i = 0; i < sentences.size(); i++) {
 			int nextIndex = i + 1;
 			if (nextIndex < sentences.size()) {
-				Sentence curStr = sentences.get(i);
-				Sentence nextStr = sentences.get(nextIndex);
+				Segment curStr = sentences.get(i);
+				Segment nextStr = sentences.get(nextIndex);
 
 				curStr.setNext(nextStr);
 				curStr.setBackConj(nextStr.getFrontConj());
@@ -231,34 +234,34 @@ public class Step1 {
 	}
 
 	// 分词
-	private void wordSegment(List<Sentence> sentences) {
+	private void wordSegment(List<Segment> sentences) {
 		Ictclas.initNLPIR();
-		for (Sentence sentence : sentences) {
+		for (Segment sentence : sentences) {
 			sentence.segWordByIctclas();
 		}
 		Ictclas.ExitIctclas();
 	}
 
 	// 依存句法分析
-	private void dgs(List<Sentence> sentences) {
+	private void dgs(List<Segment> sentences) {
 		Ltp.initLtp();
-		for (Sentence sentence : sentences) {
+		for (Segment sentence : sentences) {
 			sentence.dpByLtp();
 		}
 		Ltp.releaseLtp();
 	}
 
 	// 只保留 adj adv n v, combine 决定是否将某些类型词汇结合处理
-	private void saveSpecificWords(List<Sentence> sentences, boolean combine) {
+	private void saveSpecificWords(List<Segment> sentences, boolean combine) {
 		Ictclas.initNLPIR();
 		if (combine) {
 			Ltp.initLtp();
-			for (Sentence sentence : sentences) {
+			for (Segment sentence : sentences) {
 				sentence.combineSpecificWords();
 			}
 			Ltp.releaseLtp();
 		} else {
-			for (Sentence sentence : sentences) {
+			for (Segment sentence : sentences) {
 				sentence.saveSpecificWords();
 			}
 		}
@@ -266,9 +269,9 @@ public class Step1 {
 	}
 
 	// 得到所有词汇--词频字典
-	private Map<String, Integer> genWordSet(List<Sentence> sentences) {
+	private Map<String, Integer> genWordSet(List<Segment> sentences) {
 		Map<String, Integer> wordMap = new HashMap<>();
-		for (Sentence sentence : sentences) {
+		for (Segment sentence : sentences) {
 			if (sentence.getSentiWords() != null) {
 				for (String word : sentence.getSentiWords().split(BLANK)) {
 					if (wordMap.keySet().contains(word)) {
@@ -282,11 +285,35 @@ public class Step1 {
 		return wordMap;
 	}
 
+	// 得到所有词汇--词频--词性字典
+	private Map<String, Integer> genWordSet(List<Segment> sentences, Map<String, String> wordSpeech) {
+		Map<String, Integer> wordMap = new HashMap<>();
+		for (Segment sentence : sentences) {
+			if (sentence.getSentiWords() != null) {
+				String[] words = sentence.getSentiWords().split(BLANK);
+				String[] tags = sentence.getSentiTags().split(BLANK);
+				for (int i = 0; i < words.length; i++){
+					String word = words[i];
+					String tag = tags[i];
+					if (wordMap.keySet().contains(word)) {
+						wordMap.put(word, wordMap.get(word) + 1);
+					} else {
+						wordMap.put(word, 1);
+					}
+					wordSpeech.put(word, wordMap.get(word) + SEG + tag);
+				}
+			}
+		}
+		return wordMap;
+	}
+
 	// 词汇按词频降序排序
 	private Map<String, String> sortWord(Map<String, Integer> wordMap) {
 		Map<String, String> tmpMap = new HashMap<>(wordMap.size());
+		log("Current dir is " + ROOT, false);
 		for (String word : wordMap.keySet()) {
 			tmpMap.put(word, wordMap.get(word) + "");
+			log(word + BLANK + wordMap.get(word), false);
 		}
 		return sortMapByValue(tmpMap);
 	}

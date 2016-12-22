@@ -12,3 +12,4 @@
 hs_err_pid*
 .gitignore
 libs/
+/libs/google-collect-snapshot-20071022.jar

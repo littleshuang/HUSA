@@ -1,6 +1,6 @@
 package common;
 
-import beans.Sentence;
+import beans.Segment;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -14,7 +14,7 @@ import static common.Constants.SEG;
 /**
  * Created by Ziyun on 2016/12/15.
  *
- * 一个用于将 Sentence 列表信息输出到文件中的工具类
+ * 一个用于将 Segment 列表信息输出到文件中的工具类
  */
 
 public class WriteSentence {
@@ -41,7 +41,7 @@ public class WriteSentence {
 	 * @param sentences：待写入的句子
 	 * @param type：待输出的句子类型
 	 */
-	public static void writeSentenceInfo(String file, List<Sentence> sentences, int type) {
+	public static void writeSentenceInfo(String file, List<Segment> sentences, int type) {
 		writeSentenceInfo(file, sentences, false, type);
 	}
 
@@ -53,14 +53,14 @@ public class WriteSentence {
 	 * @param withId：是否输出句子    id
 	 * @param type：待输出的句子类型
 	 */
-	static void writeSentenceInfo(String file, List<Sentence> sentences, boolean withId, int type) {
+	static void writeSentenceInfo(String file, List<Segment> sentences, boolean withId, int type) {
 
 		try {
 			FileWriter fw = new FileWriter(file);
 			BufferedWriter bw = new BufferedWriter(fw);
 
 			StringBuilder sb = new StringBuilder();
-			for (Sentence sentence : sentences) {
+			for (Segment sentence : sentences) {
 				String info = getInfo(sentence, type);
 				if (info != null && info.length() != 0) {
 					if (withId) {
@@ -80,8 +80,8 @@ public class WriteSentence {
 		}
 	}
 
-	// 返回指定类型的 Sentence 信息
-	public static String getInfo(Sentence sentence, int type) {
+	// 返回指定类型的 Segment 信息
+	public static String getInfo(Segment sentence, int type) {
 		switch (type) {
 			case CONTENT:
 				return sentence.getContent();
