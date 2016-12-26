@@ -14,9 +14,15 @@ public class ConjWord {
 	private String word;    // 词汇
 	private Segment before, next;		// 连词分割的上下子句指针
 
+	public ConjWord(){
+		this(0, null);
+	}
+
 	public ConjWord(int type, String word) {
 		this.type = type;
 		this.word = word;
+		this.before = null;
+		this.next = null;
 	}
 
 	public int getType() {

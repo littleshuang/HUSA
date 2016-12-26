@@ -2,17 +2,20 @@ package beans;
 
 import com.sun.javafx.beans.annotations.NonNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Ziyun on 2016/12/22.
- *
+ * <p>
  * 标点分句后得到的句子
  */
 
 public class Sentence {
 	private String content;        // 内容
 	private List<Segment> segmentList = null;
+	private List<ConjWord> conjWordList = null;
 	private float score;
 
 	public Sentence() {
@@ -60,44 +63,49 @@ public class Sentence {
 	public void segSentenceByConj() {
 		List<ConjWord> conjList = addAllConjunctions();        // 所有连词
 		List<Segment> sentenceList = new ArrayList<>();
-		Map<Integer, ConjWord> conjWordMap = sentencesConjs(this.content, conjList);        // 句子连词索引
+		List<Integer> indexList = sentencesConjs(this.content, conjList);        // 句子连词索引
 		// for (int j = 0; j < indexs.size(); j++) {
 		// 	logger.debug(indexs.get(j) + BLANK + conjs.get(j).getWord());
 		// }
 
 		String tmp;
-		if (conjWordMap.size() == 0) {
+		if (indexList.size() == 0) {
 			// 句中不含连词
 			sentenceList.add(new Segment(content));
 		} else {
 			// 句中包含连词
 			Segment segment;
-
-			Iterator iterator = conjWordMap.keySet().iterator();
-			int nextBegin = (int) iterator.next();      // 下一句起始位置
-			ConjWord lastConj = conjWordMap.get(nextBegin);      // 上一个连词
+			int nextBegin = indexList.get(0);      // 下一句起始位置
+			ConjWord lastConj = conjList.get(0);      // 上一个连词
 			String first = content.substring(0, nextBegin);    // 第一句话
 			if (first.length() > 0) {
 				// 不以连词开始
-				sentenceList.add(new Segment(first));
+				Segment firstSeg = new Segment(first);
+				sentenceList.add(firstSeg);
+				lastConj.setBefore(firstSeg);
 			}
-			while (iterator.hasNext()) {
-				int nextEnd = (int) iterator.next();
+
+			for (int j = 1; j < indexList.size(); j++) {
+				int nextEnd = indexList.get(j);
+				ConjWord nextConj = conjList.get(j);
 				tmp = content.substring(nextBegin + lastConj.getWord().length(), nextEnd);
 				if (tmp.length() > 0) {
 					segment = new Segment(tmp);
-					segment.setFrontConj(lastConj.getType());
+					segment.setFrontConj(lastConj);
 					sentenceList.add(segment);
+					lastConj.setNext(segment);
+					nextConj.setBefore(segment);
 				}
-				lastConj = conjWordMap.get(nextEnd);
+				lastConj = nextConj;
 				nextBegin = nextEnd;
 			}
 			// 最后一句话
 			tmp = content.substring(nextBegin + lastConj.getWord().length());
 			if (tmp.length() > 0) {
 				segment = new Segment(tmp);
-				segment.setFrontConj(lastConj.getType());
+				segment.setFrontConj(lastConj);
 				sentenceList.add(segment);
+				lastConj.setNext(segment);
 			}
 		}
 		this.segmentList = sentenceList;
@@ -124,8 +132,8 @@ public class Sentence {
 	 *
 	 * @return 按连词出现顺序的索引
 	 */
-	private Map<Integer, ConjWord> sentencesConjs(String sentences, List<ConjWord> conjList) {
-		Map<Integer, ConjWord> resultMap = new LinkedHashMap<>();
+	private List<Integer> sentencesConjs(String sentences, List<ConjWord> conjList) {
+		List<Integer> indexList = new LinkedList<>();
 		String lastConj = "";  // 上一个连词
 
 		for (int i = 0; i < sentences.length(); i++) {
@@ -133,13 +141,14 @@ public class Sentence {
 			for (ConjWord conj : conjList) {
 				//调整连词顺序，将 但是 放于 但 前 ，而是 放于 而 前 这样会先匹配上字数多的 但是 和 而是，不会再去匹配 但 和 而
 				if (tmp.indexOf(conj.getWord()) == 0 && !lastConj.contains(conj.getWord())) {
-					resultMap.put(i, conj);
+					this.conjWordList.add(conj);
+					indexList.add(i);
 					lastConj = conj.getWord();
 					i += conj.getWord().length() - 1;
 				}
 			}
 		}
-		return resultMap;
+		return indexList;
 	}
 
 	public List<Segment> getSegmentList() {
@@ -164,5 +173,13 @@ public class Sentence {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public List<ConjWord> getConjWordList() {
+		return conjWordList;
+	}
+
+	public void setConjWordList(List<ConjWord> conjWordList) {
+		this.conjWordList = conjWordList;
 	}
 }

@@ -178,7 +178,7 @@ public class Step1 {
 				tmp = sentences.substring(nextBegin + lastConj.getWord().length(), nextEnd);
 				if (tmp.length() > 0) {
 					sentence = new Segment(id++ + "", tmp);
-					sentence.setFrontConj(lastConj.getType());
+					sentence.setFrontConj(lastConj);
 					sentenceList.add(sentence);
 				}
 				lastConj = conjWordMap.get(nextEnd);
@@ -188,7 +188,7 @@ public class Step1 {
 			tmp = sentences.substring(nextBegin + lastConj.getWord().length());
 			if (tmp.length() > 0) {
 				sentence = new Segment(id++ + "", tmp);
-				sentence.setFrontConj(lastConj.getType());
+				sentence.setFrontConj(lastConj);
 				sentenceList.add(sentence);
 			}
 		}

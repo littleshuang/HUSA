@@ -17,12 +17,12 @@ import static common.Constants.*;
 
 public class Segment {
 	private String id;               // 句子 id
-	private int frontConj = 0;               // 句子连词类型:前面
-	private int backConj = 0;               // 句子连词类型:后面
+	private ConjWord frontConj = null;               // 句子连词类型:前面
+	private ConjWord backConj = null;               // 句子连词类型:后面
 	private String content;         // 句子内容
 	private String wordSeg;        // 分词
 	private String sentiWords;        // 情感倾向性词汇（adj adv n v）
-	private String sentiTags;        // 情感倾向性词汇词性（adj adv n v）
+	private String sentiTags;        // 情感倾向性词汇词性
 	List<Integer> wordIds;            // 词汇id列表
 	private String wordSegWithTag;         // 带词性标注的分词
 	private String dgs;         // 依存句法分析
@@ -32,6 +32,7 @@ public class Segment {
 	List<Integer> heads;         // 结果依存弧，heads[i]代表第i个词的父亲节点的编号
 	List<String> deprels;       // 结果依存弧关系类型
 	Segment before, next;        // 指向前后句子的指针
+	float score = 0f;
 
 	public Segment(String content) {
 		this.content = content;
@@ -420,19 +421,19 @@ public class Segment {
 		this.deprels = deprels;
 	}
 
-	public int getFrontConj() {
+	public ConjWord getFrontConj() {
 		return frontConj;
 	}
 
-	public void setFrontConj(int frontConj) {
+	public void setFrontConj(ConjWord frontConj) {
 		this.frontConj = frontConj;
 	}
 
-	public int getBackConj() {
+	public ConjWord getBackConj() {
 		return backConj;
 	}
 
-	public void setBackConj(int backConj) {
+	public void setBackConj(ConjWord backConj) {
 		this.backConj = backConj;
 	}
 
@@ -450,5 +451,13 @@ public class Segment {
 
 	public void setNext(Segment next) {
 		this.next = next;
+	}
+
+	public float getScore() {
+		return score;
+	}
+
+	public void setScore(float score) {
+		this.score = score;
 	}
 }
