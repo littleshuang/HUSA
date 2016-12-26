@@ -83,6 +83,27 @@ public class FileTools {
 		return dataList;
 	}
 
+	public static Set<String> readDataToSet(@NonNull String file){
+		return readDataToSet(new File(file));
+	}
+
+	public static Set<String> readDataToSet(@NonNull File file){
+		Set<String> dataSet = new HashSet<>();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String line;
+			while ((line = br.readLine()) != null) {
+				dataSet.add(line);
+			}
+			br.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return dataSet;
+	}
+
 	// 将列表数据写入文件中
 	public static <T> void writeListToFile(@NonNull String file, @NonNull List<T> data) {
 		try {

@@ -6,56 +6,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static NLP.Ltp.parseByLtp;
-import static NLP.NlpTools.translateTag;
 import static common.Constants.*;
 
 /**
- * Created by Ziyun on 2016/12/15.
- *
- * 连词分句后得到的子句
+ * Created by Ziyun on 2016/12/26.
+ * 子句
  */
 
-public class Segment {
-	public static final int NORMAL = 1;		// 一般类型
-	public static final int CONJ = 2;		// 连词类型
+public class Segment1 {
+	public static final int NORMAL = 1;        // 一般类型
+	public static final int CONJ = 2;        // 连词类型
 
 	private String id;               // 句子 id
-	private int type;				// 子句类型
-	private String[] wordSegmentWithTag;	// 分词词组
-
-
-	private Word frontConj = null;               // 句子连词类型:前面
-	private Word backConj = null;               // 句子连词类型:后面
-	private String content;         // 句子内容
-	private String wordSeg;        // 分词
-	private String sentiWords;        // 情感倾向性词汇（adj adv n v）
-	private String sentiTags;        // 情感倾向性词汇词性
-	List<Integer> wordIds;            // 词汇id列表
+	private int type;                // 子句类型
+	private String[] wordSegmentWithTag;    // 分词词组
 	private String wordSegWithTag;         // 带词性标注的分词
+	private String wordSeg;        // 分词
+	private String content;         // 句子内容
+	private String selectedWords;
+	private List<Word> wordList;	// 词汇列表
 	private String dgs;         // 依存句法分析
 	private int size;           // 依存语句数
 	List<String> words;         // 词列表
 	List<String> tags;          // 词性列表
 	List<Integer> heads;         // 结果依存弧，heads[i]代表第i个词的父亲节点的编号
 	List<String> deprels;       // 结果依存弧关系类型
-	Segment before, next;        // 指向前后句子的指针
+	Segment1 before, next;        // 指向前后句子的指针
 	float score = 0f;
 
-	public Segment(String content) {
-		this.content = content;
-	}
 
-	public Segment(String[] wordArray){
+	public Segment1(String[] wordArray) {
 		this.wordSegmentWithTag = wordArray;
 	}
 
-	public Segment(String id, String content) {
+	public Segment1(String content) {
+		this.content = content;
+	}
+
+	public Segment1(String id, String content) {
 		this.id = id;
 		this.content = content;
 	}
 
-	// 中科院分词工具分词
-	public void segWordByIctclas() {
+	// 分词
+	public void segWord() {
 		if (words == null) {
 			words = new ArrayList<>();
 		}
@@ -64,24 +58,26 @@ public class Segment {
 		}
 		if (content.length() > 0) {
 			wordSegWithTag = Ictclas.ICTCLASSegment(content, 1);
-			StringBuilder sb = new StringBuilder();
-			for (String word : wordSegWithTag.split(BLANK)) {
-				String[] wordTag = word.split(POSSEG);
-				if (wordTag.length == 2) {
-					sb.append(wordTag[0]);
-					sb.append(BLANK);
-					words.add(wordTag[0]);
-					tags.add(translateTag(wordTag[1]));     // 将中科院词性标注转换为LTP词性标注
-				}
-			}
-			wordSeg = sb.toString().trim();
+			wordSegmentWithTag = wordSegWithTag.split(BLANK);
 		}
+
+		StringBuilder sb = new StringBuilder();
+		for (String wordTag : wordSegmentWithTag) {
+			String[] wordTags = wordTag.split(POSSEG);
+			String word = wordTags[0];
+			String tag = wordTags[1];
+			words.add(word);
+			tags.add(tag);
+			sb.append(word);
+			sb.append(BLANK);
+		}
+		wordSeg = sb.toString().trim();
 	}
 
 	// LTP 依存句法分析
 	public void dpByLtp() {
 		if (words == null || tags == null) {
-			segWordByIctclas();
+			segWord();
 		}
 		this.heads = new ArrayList<>();
 		this.deprels = new ArrayList<>();
@@ -115,7 +111,7 @@ public class Segment {
 		}
 	}
 
-	// 保留指定依存关系对
+	// 保留指定依存关系对,并将父节点与子节点相邻的项结合
 	public List<String> saveSpecificDp() {
 		List<String> resultDps = new ArrayList<>();
 
@@ -182,18 +178,27 @@ public class Segment {
 
 	// 保留 adj adv n v stock
 	public void saveSpecificWords() {
-		if (wordSegWithTag.length() == 0) {
-			segWordByIctclas();
+		this.saveSpecificWords(null);
+	}
+
+	// 保留指定词性的词汇
+	public void saveSpecificWords(String[] tags) {
+		if (wordSegmentWithTag.length == 0) {
+			segWord();
 		}
 		StringBuilder sb = new StringBuilder();
-		for (String word : wordSegWithTag.split(BLANK)) {
+		for (String word : wordSegmentWithTag) {
 			String[] words = word.split(POSSEG);
-			if (words.length == 2 && isSentiWord(words[1])) {
+			if (words.length == 2 && isSentiWord(words[1], tags)) {
 				sb.append(word.split(POSSEG)[0]);
 				sb.append(BLANK);
 			}
-			sentiWords = sb.toString();
+			selectedWords = sb.toString();
 		}
+	}
+
+	private boolean isSentiWord(String tag){
+		return isSentiWord(tag, null);
 	}
 
 	/**
@@ -202,12 +207,14 @@ public class Segment {
 	 * @param tag
 	 * @return
 	 */
-	private boolean isSentiWord(String tag) {
+	private boolean isSentiWord(String tag, String[] sentiTags) {
 		// String[] sentiTags = {"a", "d", "n", "nl", "nd", "v", "stock"};
-		String[] sentiTags = {"a", "n", "nl", "nd", "stock"};
+		if (sentiTags == null) {
+			sentiTags = new String[]{"a", "n", "nl", "nd", "stock"};
+		}
 
-		for (String sentiTag : sentiTags){
-			if (tag.equals(sentiTag)){
+		for (String sentiTag : sentiTags) {
+			if (tag.equals(sentiTag)) {
 				return true;
 			}
 		}
@@ -221,7 +228,6 @@ public class Segment {
 		}
 
 		StringBuilder wordSb = new StringBuilder();
-		StringBuilder tagSb = new StringBuilder();
 		int i = 0;
 		while (i < size) {
 			String curWord = words.get(i);
@@ -239,16 +245,10 @@ public class Segment {
 							wordSb.append(curWord);
 							wordSb.append(nextWord);
 							wordSb.append(BLANK);
-							tagSb.append(curTag);
-							tagSb.append(UNDERLINE);
-							tagSb.append(nextTag);
-							tagSb.append(BLANK);
 						} else if (qualifiedDp(deprels.get(i)) && heads.get(i) == next) {
 							// 下一个词汇是当前词汇的父节点
 							i++;
 							wordSb.append(nextWord);
-							tagSb.append(nextTag);
-							tagSb.append(UNDERLINE);
 							addCur = true;
 							// sb.append(curWord);
 							// sb.append(BLANK);
@@ -273,13 +273,10 @@ public class Segment {
 			if (addCur) {
 				wordSb.append(curWord);
 				wordSb.append(BLANK);
-				tagSb.append(curTag);
-				tagSb.append(BLANK);
 			}
 			i++;
 		}
-		sentiWords = wordSb.toString().trim();
-		sentiTags = tagSb.toString().trim();
+		selectedWords = wordSb.toString().trim();
 	}
 
 	/**
@@ -287,7 +284,7 @@ public class Segment {
 	 */
 	public void combineWord() {
 		if (wordSeg.length() == 0) {
-			segWordByIctclas();
+			segWord();
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -316,16 +313,8 @@ public class Segment {
 				}
 				sb.append(BLANK);
 			}
-			setSentiWords(sb.toString());
+			selectedWords = sb.toString();
 		}
-	}
-
-	// 添加词汇id
-	public void addWordId(int wid) {
-		if (this.getWordIds() == null) {
-			this.setWordIds(new ArrayList<Integer>());
-		}
-		this.getWordIds().add(wid);
 	}
 
 	public String getId() {
@@ -336,12 +325,36 @@ public class Segment {
 		this.id = id;
 	}
 
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public String[] getWordSegmentWithTag() {
+		return wordSegmentWithTag;
+	}
+
+	public void setWordSegmentWithTag(String[] wordSegmentWithTag) {
+		this.wordSegmentWithTag = wordSegmentWithTag;
+	}
+
 	public String getContent() {
 		return content;
 	}
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getWordSegWithTag() {
+		return wordSegWithTag;
+	}
+
+	public void setWordSegWithTag(String wordSegWithTag) {
+		this.wordSegWithTag = wordSegWithTag;
 	}
 
 	public String getWordSeg() {
@@ -352,36 +365,12 @@ public class Segment {
 		this.wordSeg = wordSeg;
 	}
 
-	public String getSentiWords() {
-		return sentiWords;
+	public String getSelectedWords() {
+		return selectedWords;
 	}
 
-	public void setSentiWords(String sentiWords) {
-		this.sentiWords = sentiWords;
-	}
-
-	public String getSentiTags() {
-		return sentiTags;
-	}
-
-	public void setSentiTags(String sentiTags) {
-		this.sentiTags = sentiTags;
-	}
-
-	public List<Integer> getWordIds() {
-		return wordIds;
-	}
-
-	public void setWordIds(List<Integer> wordIds) {
-		this.wordIds = wordIds;
-	}
-
-	public String getWordSegWithTag() {
-		return wordSegWithTag;
-	}
-
-	public void setWordSegWithTag(String wordSegWithTag) {
-		this.wordSegWithTag = wordSegWithTag;
+	public void setSelectedWords(String selectedWords) {
+		this.selectedWords = selectedWords;
 	}
 
 	public String getDgs() {
@@ -432,35 +421,19 @@ public class Segment {
 		this.deprels = deprels;
 	}
 
-	public Word getFrontConj() {
-		return frontConj;
-	}
-
-	public void setFrontConj(Word frontConj) {
-		this.frontConj = frontConj;
-	}
-
-	public Word getBackConj() {
-		return backConj;
-	}
-
-	public void setBackConj(Word backConj) {
-		this.backConj = backConj;
-	}
-
-	public Segment getBefore() {
+	public Segment1 getBefore() {
 		return before;
 	}
 
-	public void setBefore(Segment before) {
+	public void setBefore(Segment1 before) {
 		this.before = before;
 	}
 
-	public Segment getNext() {
+	public Segment1 getNext() {
 		return next;
 	}
 
-	public void setNext(Segment next) {
+	public void setNext(Segment1 next) {
 		this.next = next;
 	}
 
@@ -472,19 +445,11 @@ public class Segment {
 		this.score = score;
 	}
 
-	public String[] getWordSegmentWithTag() {
-		return wordSegmentWithTag;
+	public List<Word> getWordList() {
+		return wordList;
 	}
 
-	public void setWordSegmentWithTag(String[] wordSegmentWithTag) {
-		this.wordSegmentWithTag = wordSegmentWithTag;
-	}
-
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
+	public void setWordList(List<Word> wordList) {
+		this.wordList = wordList;
 	}
 }

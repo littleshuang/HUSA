@@ -2,12 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee016527-27ec-48cb-97c2-d6f00afdda6c" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/SentimentAnalysis/Part1.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/beans/Segment1.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/beans/Word.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/beans/ConjWord.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/beans/Para.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SentimentAnalysis/Step1.java" afterPath="$PROJECT_DIR$/src/SentimentAnalysis/Step1.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SentimentAnalysis/Step7.java" afterPath="$PROJECT_DIR$/src/SentimentAnalysis/Step7.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/beans/ConjWord.java" afterPath="$PROJECT_DIR$/src/beans/ConjWord.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/beans/Segment.java" afterPath="$PROJECT_DIR$/src/beans/Segment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/beans/Sentence.java" afterPath="$PROJECT_DIR$/src/beans/Sentence.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tools/FileTools.java" afterPath="$PROJECT_DIR$/src/tools/FileTools.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,14 +31,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="Step7.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Step7.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SentimentAnalysis/Step7.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="140" column="21" lean-forward="false" selection-start-line="140" selection-start-column="21" selection-end-line="140" selection-end-column="21" />
+            <state relative-caret-position="-832">
+              <caret line="44" column="24" lean-forward="false" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;class#Step7#0" expanded="true" />
+                <element signature="method#wordSegment#0;class#Step7#0" expanded="false" />
+                <element signature="method#calSegmentScore#0;class#Step7#0" expanded="false" />
+                <element signature="method#calSentenceScore#0;class#Step7#0" expanded="false" />
+                <element signature="method#calDocumentScore#0;class#Step7#0" expanded="false" />
+                <marker date="1482753824960" expanded="false" signature="1338:1936" ph="{...}" />
+                <marker date="1482753824960" expanded="false" signature="2012:2203" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -42,26 +53,20 @@
       <file leaf-file-name="FileTools.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tools/FileTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="159" column="9" lean-forward="true" selection-start-line="147" selection-start-column="8" selection-end-line="159" selection-end-column="9" />
+            <state relative-caret-position="509">
+              <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
               <folding>
                 <element signature="method#readDataFromFiles#1;class#FileTools#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Step1.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SentimentAnalysis/Step1.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="190" column="0" lean-forward="false" selection-start-line="190" selection-start-column="0" selection-end-line="191" selection-end-column="0" />
-              <folding>
-                <element signature="method#segParas#0;class#Step1#0" expanded="false" />
-                <element signature="method#segParaByPunc#0;class#Step1#0" expanded="false" />
-                <element signature="method#addAllConjunctions#0;class#Step1#0" expanded="false" />
-                <element signature="method#addConjs#0;class#Step1#0" expanded="false" />
-                <element signature="method#segSentenceByConj#0;class#Step1#0" expanded="false" />
+                <element signature="e#1867#1868#0" expanded="true" />
+                <element signature="e#1910#1911#0" expanded="true" />
+                <element signature="method#writeListToFile#0;class#FileTools#0" expanded="false" />
+                <element signature="method#writeSetToFile#0;class#FileTools#0" expanded="false" />
+                <element signature="method#writeMapToFile#1;class#FileTools#0" expanded="false" />
+                <element signature="method#writeCollectionToFile#0;class#FileTools#0" expanded="false" />
+                <element signature="method#createDir#0;class#FileTools#0" expanded="false" />
+                <element signature="method#mkParentDirs#0;class#FileTools#0" expanded="false" />
+                <element signature="method#replaceBlank#0;class#FileTools#0" expanded="false" />
+                <element signature="method#newTrim#0;class#FileTools#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -70,10 +75,171 @@
       <file leaf-file-name="Document.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/beans/Document.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="702">
-              <caret line="36" column="16" lean-forward="false" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
+            <state relative-caret-position="601">
+              <caret line="57" column="9" lean-forward="true" selection-start-line="57" selection-start-column="9" selection-end-line="57" selection-end-column="9" />
               <folding>
-                <element signature="docComment;method#segParaByPunc#0;class#Document#0" expanded="true" />
+                <element signature="method#genRawType#0;class#Document#0" expanded="false" />
+                <element signature="method#segParaByPunc#0;class#Document#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Step1.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SentimentAnalysis/Step1.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-6480">
+              <caret line="33" column="22" lean-forward="true" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
+              <folding>
+                <marker date="1482750390056" expanded="false" signature="2884:2892" ph="&lt;~&gt;" />
+                <marker date="1482750390056" expanded="false" signature="4038:4048" ph="&lt;~&gt;" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Part1.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/SentimentAnalysis/Part1.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-112">
+              <caret line="84" column="9" lean-forward="false" selection-start-line="81" selection-start-column="8" selection-end-line="84" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#readDocument#0;class#Part1#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Word.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/beans/Word.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="9" column="51" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="9" selection-end-column="51" />
+              <folding>
+                <element signature="e#685#686#0" expanded="true" />
+                <element signature="e#709#710#0" expanded="true" />
+                <element signature="e#858#859#0" expanded="true" />
+                <element signature="e#876#877#0" expanded="true" />
+                <element signature="e#910#911#0" expanded="true" />
+                <element signature="e#933#934#0" expanded="true" />
+                <element signature="e#1268#1269#0" expanded="true" />
+                <element signature="e#1286#1287#0" expanded="true" />
+                <element signature="e#1320#1321#0" expanded="true" />
+                <element signature="e#1343#1344#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Sentence.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/beans/Sentence.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="283">
+              <caret line="79" column="55" lean-forward="false" selection-start-line="79" selection-start-column="55" selection-end-line="79" selection-end-column="55" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="docComment;class#Sentence#0" expanded="true" />
+                <element signature="method#segWordByIctclas#0;class#Sentence#0" expanded="false" />
+                <element signature="method#genWordList#0;class#Sentence#0" expanded="false" />
+                <element signature="method#conjType#0;class#Sentence#0" expanded="false" />
+                <element signature="method#segSentenceByConjs#0;class#Sentence#0" expanded="false" />
+                <element signature="method#setBeforeNext#0;class#Sentence#0" expanded="false" />
+                <element signature="method#addAllConjunctions#0;class#Sentence#0" expanded="false" />
+                <element signature="method#addConjs#0;class#Sentence#0" expanded="false" />
+                <element signature="e#4397#4404#0" expanded="true" />
+                <element signature="e#7361#7362#0" expanded="true" />
+                <element signature="e#7389#7390#0" expanded="true" />
+                <element signature="e#7446#7447#0" expanded="true" />
+                <element signature="e#7489#7490#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Segment1.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/beans/Segment1.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6125">
+              <caret line="447" column="0" lean-forward="false" selection-start-line="447" selection-start-column="0" selection-end-line="448" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="docComment;class#Segment1#0" expanded="true" />
+                <element signature="e#1025#1026#0" expanded="true" />
+                <element signature="e#1067#1068#0" expanded="true" />
+                <element signature="e#4106#4107#0" expanded="true" />
+                <element signature="e#4141#4142#0" expanded="true" />
+                <element signature="e#4595#4596#0" expanded="true" />
+                <element signature="e#4631#4632#0" expanded="true" />
+                <element signature="method#combineWord#0;class#Segment1#0" expanded="false" />
+                <element signature="e#7362#7363#0" expanded="true" />
+                <element signature="e#7378#7379#0" expanded="true" />
+                <element signature="e#7411#7412#0" expanded="true" />
+                <element signature="e#7430#7431#0" expanded="true" />
+                <element signature="e#7455#7456#0" expanded="true" />
+                <element signature="e#7473#7474#0" expanded="true" />
+                <element signature="e#7507#7508#0" expanded="true" />
+                <element signature="e#7530#7531#0" expanded="true" />
+                <element signature="e#7574#7575#0" expanded="true" />
+                <element signature="e#7606#7607#0" expanded="true" />
+                <element signature="e#7673#7674#0" expanded="true" />
+                <element signature="e#7724#7725#0" expanded="true" />
+                <element signature="e#7755#7756#0" expanded="true" />
+                <element signature="e#7776#7777#0" expanded="true" />
+                <element signature="e#7819#7820#0" expanded="true" />
+                <element signature="e#7848#7849#0" expanded="true" />
+                <element signature="e#7886#7887#0" expanded="true" />
+                <element signature="e#7914#7915#0" expanded="true" />
+                <element signature="e#7971#7972#0" expanded="true" />
+                <element signature="e#8014#8015#0" expanded="true" />
+                <element signature="e#8045#8046#0" expanded="true" />
+                <element signature="e#8066#8067#0" expanded="true" />
+                <element signature="e#8109#8110#0" expanded="true" />
+                <element signature="e#8138#8139#0" expanded="true" />
+                <element signature="e#8175#8176#0" expanded="true" />
+                <element signature="e#8202#8203#0" expanded="true" />
+                <element signature="e#8257#8258#0" expanded="true" />
+                <element signature="e#8298#8299#0" expanded="true" />
+                <element signature="e#8325#8326#0" expanded="true" />
+                <element signature="e#8342#8343#0" expanded="true" />
+                <element signature="e#8377#8378#0" expanded="true" />
+                <element signature="e#8398#8399#0" expanded="true" />
+                <element signature="e#8423#8424#0" expanded="true" />
+                <element signature="e#8441#8442#0" expanded="true" />
+                <element signature="e#8475#8476#0" expanded="true" />
+                <element signature="e#8498#8499#0" expanded="true" />
+                <element signature="e#8533#8534#0" expanded="true" />
+                <element signature="e#8552#8553#0" expanded="true" />
+                <element signature="e#8597#8598#0" expanded="true" />
+                <element signature="e#8622#8623#0" expanded="true" />
+                <element signature="e#8656#8657#0" expanded="true" />
+                <element signature="e#8674#8675#0" expanded="true" />
+                <element signature="e#8717#8718#0" expanded="true" />
+                <element signature="e#8740#8741#0" expanded="true" />
+                <element signature="e#8776#8777#0" expanded="true" />
+                <element signature="e#8795#8796#0" expanded="true" />
+                <element signature="e#8841#8842#0" expanded="true" />
+                <element signature="e#8866#8867#0" expanded="true" />
+                <element signature="e#8903#8904#0" expanded="true" />
+                <element signature="e#8924#8925#0" expanded="true" />
+                <element signature="e#8973#8974#0" expanded="true" />
+                <element signature="e#9002#9003#0" expanded="true" />
+                <element signature="e#9034#9035#0" expanded="true" />
+                <element signature="e#9054#9055#0" expanded="true" />
+                <element signature="e#9097#9098#0" expanded="true" />
+                <element signature="e#9124#9125#0" expanded="true" />
+                <element signature="e#9154#9155#0" expanded="true" />
+                <element signature="e#9172#9173#0" expanded="true" />
+                <element signature="e#9211#9212#0" expanded="true" />
+                <element signature="e#9234#9235#0" expanded="true" />
+                <element signature="e#9262#9263#0" expanded="true" />
+                <element signature="e#9281#9282#0" expanded="true" />
+                <element signature="e#9319#9320#0" expanded="true" />
+                <element signature="e#9344#9345#0" expanded="true" />
+                <element signature="e#9380#9381#0" expanded="true" />
+                <element signature="e#9402#9403#0" expanded="true" />
+                <element signature="e#9451#9452#0" expanded="true" />
+                <element signature="e#9482#9483#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -82,11 +248,13 @@
       <file leaf-file-name="Segment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/beans/Segment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1080">
-              <caret line="104" column="5" lean-forward="true" selection-start-line="104" selection-start-column="5" selection-end-line="104" selection-end-column="5" />
+            <state relative-caret-position="212">
+              <caret line="29" column="13" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
               <folding>
                 <element signature="docComment;class#Segment#0" expanded="true" />
-                <element signature="method#Segment#1;class#Segment#0" expanded="false" />
+                <element signature="e#1310#1311#0" expanded="true" />
+                <element signature="e#1352#1353#0" expanded="true" />
+                <element signature="method#Segment#2;class#Segment#0" expanded="false" />
                 <element signature="method#segWordByIctclas#0;class#Segment#0" expanded="false" />
                 <element signature="method#dpByLtp#0;class#Segment#0" expanded="false" />
                 <element signature="method#genDgsStr#0;class#Segment#0" expanded="false" />
@@ -97,38 +265,14 @@
                 <element signature="method#combineSpecificWords#0;class#Segment#0" expanded="false" />
                 <element signature="method#combineWord#0;class#Segment#0" expanded="false" />
                 <element signature="method#addWordId#0;class#Segment#0" expanded="false" />
-                <element signature="e#9737#9738#0" expanded="true" />
-                <element signature="e#9756#9757#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Sentence.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/beans/Sentence.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2025">
-              <caret line="87" column="53" lean-forward="false" selection-start-line="87" selection-start-column="53" selection-end-line="87" selection-end-column="53" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="docComment;class#Sentence#0" expanded="true" />
-                <element signature="e#4735#4736#0" expanded="true" />
-                <element signature="e#4761#4762#0" expanded="true" />
-                <element signature="e#4822#4823#0" expanded="true" />
-                <element signature="e#4861#4862#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConjWord.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/beans/ConjWord.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="17" column="22" lean-forward="false" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
-              <folding>
-                <element signature="e#413#414#0" expanded="true" />
-                <element signature="e#433#434#0" expanded="true" />
+                <element signature="e#10088#10089#0" expanded="true" />
+                <element signature="e#10120#10121#0" expanded="true" />
+                <element signature="e#10187#10188#0" expanded="true" />
+                <element signature="e#10238#10239#0" expanded="true" />
+                <element signature="e#10263#10264#0" expanded="true" />
+                <element signature="e#10281#10282#0" expanded="true" />
+                <element signature="e#10315#10316#0" expanded="true" />
+                <element signature="e#10338#10339#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -147,9 +291,11 @@
     <findStrings>
       <find>logger.info</find>
       <find>wordSb</find>
+      <find>ConjWord</find>
     </findStrings>
     <replaceStrings>
       <replace>log</replace>
+      <replace>Word</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -168,9 +314,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/common/WriteSentence.java" />
-        <option value="$PROJECT_DIR$/src/NLP/Ltp.java" />
-        <option value="$PROJECT_DIR$/src/NLP/Ictclas.java" />
         <option value="$PROJECT_DIR$/src/NLP/NlpTools.java" />
         <option value="$PROJECT_DIR$/src/common/SoPmi.java" />
         <option value="$PROJECT_DIR$/src/similarity/cilin/CilinCoding.java" />
@@ -186,7 +329,6 @@
         <option value="$PROJECT_DIR$/src/similarity/SimilarityTest.java" />
         <option value="$PROJECT_DIR$/src/similarity/SoPmi.java" />
         <option value="$PROJECT_DIR$/src/SentimentAnalysis/Step2.java" />
-        <option value="$PROJECT_DIR$/src/tools/FileTools.java" />
         <option value="$PROJECT_DIR$/src/beans/Transaction.java" />
         <option value="$PROJECT_DIR$/src/beans/Trans.java" />
         <option value="$PROJECT_DIR$/src/common/Constants.java" />
@@ -215,9 +357,13 @@
         <option value="$PROJECT_DIR$/src/minFHM/UtilityList.java" />
         <option value="$PROJECT_DIR$/src/minFHM/ArraysAlgos.java" />
         <option value="$PROJECT_DIR$/src/beans/ConjWord.java" />
-        <option value="$PROJECT_DIR$/src/beans/Sentence.java" />
+        <option value="$PROJECT_DIR$/src/beans/Word.java" />
         <option value="$PROJECT_DIR$/src/beans/Segment.java" />
+        <option value="$PROJECT_DIR$/src/beans/Sentence.java" />
         <option value="$PROJECT_DIR$/src/SentimentAnalysis/Step1.java" />
+        <option value="$PROJECT_DIR$/src/SentimentAnalysis/Part1.java" />
+        <option value="$PROJECT_DIR$/src/beans/Segment1.java" />
+        <option value="$PROJECT_DIR$/src/tools/FileTools.java" />
         <option value="$PROJECT_DIR$/src/SentimentAnalysis/Step7.java" />
       </list>
     </option>
@@ -767,7 +913,14 @@
       <option name="project" value="LOCAL" />
       <updated>1482407853984</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="添加了一些代码">
+      <created>1482722124237</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1482722124237</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -791,6 +944,7 @@
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20751232" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Tail" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298731" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -802,7 +956,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14648212" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298731" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -845,7 +998,9 @@
     <option name="LAST_COMMIT_MESSAGE" value="添加了一些代码" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="2" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -853,27 +1008,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.idea/checkstyle-idea.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-729">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/vcs.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/description.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -958,31 +1092,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/beans/Trans.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1026">
-          <caret line="40" column="29" lean-forward="false" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/common/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="24" column="34" lean-forward="false" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/beans/Term.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
-          <caret line="90" column="1" lean-forward="false" selection-start-line="90" selection-start-column="1" selection-end-line="90" selection-end-column="1" />
-          <folding>
-            <element signature="docComment;class#Term#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -998,6 +1112,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="509">
           <caret line="75" column="13" lean-forward="false" selection-start-line="75" selection-start-column="13" selection-end-line="75" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1033,8 +1150,8 @@
         <state relative-caret-position="407">
           <caret line="81" column="0" lean-forward="true" selection-start-line="64" selection-start-column="8" selection-end-line="81" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;class#Step6#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="docComment;class#Step6#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1044,7 +1161,7 @@
         <state relative-caret-position="544">
           <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
             <element signature="docComment;class#Step8#0" expanded="false" />
           </folding>
         </state>
@@ -1103,17 +1220,9 @@
         <state relative-caret-position="512">
           <caret line="93" column="27" lean-forward="false" selection-start-line="93" selection-start-column="27" selection-end-line="93" selection-end-column="27" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
             <element signature="docComment;class#Step5#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/beans/Para.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="599">
-          <caret line="163" column="5" lean-forward="true" selection-start-line="22" selection-start-column="4" selection-end-line="163" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1129,11 +1238,11 @@
         <state relative-caret-position="182">
           <caret line="109" column="20" lean-forward="false" selection-start-line="109" selection-start-column="20" selection-end-line="109" selection-end-column="20" />
           <folding>
-            <element signature="e#1083#1084#0" expanded="true" />
-            <element signature="e#1125#1126#0" expanded="true" />
-            <element signature="e#1512#1779#0" expanded="true" />
-            <element signature="e#1778#1779#0" expanded="true" />
-            <element signature="docComment;method#roundDouble#0;class#CommonTools#0" expanded="true" />
+            <element signature="e#1083#1084#0" expanded="false" />
+            <element signature="e#1125#1126#0" expanded="false" />
+            <element signature="e#1512#1779#0" expanded="false" />
+            <element signature="e#1778#1779#0" expanded="false" />
+            <element signature="docComment;method#roundDouble#0;class#CommonTools#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1185,6 +1294,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
           <caret line="31" column="7" lean-forward="true" selection-start-line="31" selection-start-column="7" selection-end-line="31" selection-end-column="7" />
+          <folding>
+            <element signature="docComment;method#Sememe#0;class#Sememe#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1199,6 +1311,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
           <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1206,6 +1319,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
           <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1213,62 +1327,53 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
           <caret line="260" column="28" lean-forward="false" selection-start-line="260" selection-start-column="28" selection-end-line="260" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/beans/Document.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="36" column="16" lean-forward="false" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
           <folding>
-            <element signature="docComment;method#segParaByPunc#0;class#Document#0" expanded="true" />
+            <element signature="docComment;method#intersectTwoSortedArrays#0;class#ArraysAlgos#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/beans/Sentence.java">
+    <entry file="file://$PROJECT_DIR$/src/beans/Para.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2025">
-          <caret line="87" column="53" lean-forward="false" selection-start-line="87" selection-start-column="53" selection-end-line="87" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;class#Sentence#0" expanded="true" />
-            <element signature="e#4735#4736#0" expanded="true" />
-            <element signature="e#4761#4762#0" expanded="true" />
-            <element signature="e#4822#4823#0" expanded="true" />
-            <element signature="e#4861#4862#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="3807">
+          <caret line="163" column="5" lean-forward="true" selection-start-line="22" selection-start-column="4" selection-end-line="163" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tools/FileTools.java">
+    <entry file="file://$PROJECT_DIR$/src/beans/Term.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="159" column="9" lean-forward="true" selection-start-line="147" selection-start-column="8" selection-end-line="159" selection-end-column="9" />
-          <folding>
-            <element signature="method#readDataFromFiles#1;class#FileTools#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="1647">
+          <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/beans/ConjWord.java">
+    <entry file="file://$PROJECT_DIR$/src/beans/Trans.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="17" column="22" lean-forward="false" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
-          <folding>
-            <element signature="e#413#414#0" expanded="true" />
-            <element signature="e#433#434#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="779">
+          <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/beans/Word.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="11" column="55" lean-forward="true" selection-start-line="7" selection-start-column="4" selection-end-line="11" selection-end-column="55" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/beans/Segment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1080">
-          <caret line="104" column="5" lean-forward="true" selection-start-line="104" selection-start-column="5" selection-end-line="104" selection-end-column="5" />
+        <state relative-caret-position="212">
+          <caret line="29" column="13" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding>
             <element signature="docComment;class#Segment#0" expanded="true" />
-            <element signature="method#Segment#1;class#Segment#0" expanded="false" />
+            <element signature="e#1310#1311#0" expanded="true" />
+            <element signature="e#1352#1353#0" expanded="true" />
+            <element signature="method#Segment#2;class#Segment#0" expanded="false" />
             <element signature="method#segWordByIctclas#0;class#Segment#0" expanded="false" />
             <element signature="method#dpByLtp#0;class#Segment#0" expanded="false" />
             <element signature="method#genDgsStr#0;class#Segment#0" expanded="false" />
@@ -1279,33 +1384,212 @@
             <element signature="method#combineSpecificWords#0;class#Segment#0" expanded="false" />
             <element signature="method#combineWord#0;class#Segment#0" expanded="false" />
             <element signature="method#addWordId#0;class#Segment#0" expanded="false" />
-            <element signature="e#9737#9738#0" expanded="true" />
-            <element signature="e#9756#9757#0" expanded="true" />
+            <element signature="e#10088#10089#0" expanded="true" />
+            <element signature="e#10120#10121#0" expanded="true" />
+            <element signature="e#10187#10188#0" expanded="true" />
+            <element signature="e#10238#10239#0" expanded="true" />
+            <element signature="e#10263#10264#0" expanded="true" />
+            <element signature="e#10281#10282#0" expanded="true" />
+            <element signature="e#10315#10316#0" expanded="true" />
+            <element signature="e#10338#10339#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/beans/Document.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="601">
+          <caret line="57" column="9" lean-forward="true" selection-start-line="57" selection-start-column="9" selection-end-line="57" selection-end-column="9" />
+          <folding>
+            <element signature="method#genRawType#0;class#Document#0" expanded="false" />
+            <element signature="method#segParaByPunc#0;class#Document#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/beans/Sentence.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="79" column="55" lean-forward="false" selection-start-line="79" selection-start-column="55" selection-end-line="79" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="docComment;class#Sentence#0" expanded="true" />
+            <element signature="method#segWordByIctclas#0;class#Sentence#0" expanded="false" />
+            <element signature="method#genWordList#0;class#Sentence#0" expanded="false" />
+            <element signature="method#conjType#0;class#Sentence#0" expanded="false" />
+            <element signature="method#segSentenceByConjs#0;class#Sentence#0" expanded="false" />
+            <element signature="method#setBeforeNext#0;class#Sentence#0" expanded="false" />
+            <element signature="method#addAllConjunctions#0;class#Sentence#0" expanded="false" />
+            <element signature="method#addConjs#0;class#Sentence#0" expanded="false" />
+            <element signature="e#4397#4404#0" expanded="true" />
+            <element signature="e#7361#7362#0" expanded="true" />
+            <element signature="e#7389#7390#0" expanded="true" />
+            <element signature="e#7446#7447#0" expanded="true" />
+            <element signature="e#7489#7490#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SentimentAnalysis/Step1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="190" column="0" lean-forward="false" selection-start-line="190" selection-start-column="0" selection-end-line="191" selection-end-column="0" />
+        <state relative-caret-position="-6480">
+          <caret line="33" column="22" lean-forward="true" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
           <folding>
-            <element signature="method#segParas#0;class#Step1#0" expanded="false" />
-            <element signature="method#segParaByPunc#0;class#Step1#0" expanded="false" />
-            <element signature="method#addAllConjunctions#0;class#Step1#0" expanded="false" />
-            <element signature="method#addConjs#0;class#Step1#0" expanded="false" />
-            <element signature="method#segSentenceByConj#0;class#Step1#0" expanded="false" />
+            <marker date="1482750390056" expanded="false" signature="2884:2892" ph="&lt;~&gt;" />
+            <marker date="1482750390056" expanded="false" signature="4038:4048" ph="&lt;~&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/beans/Segment1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6125">
+          <caret line="447" column="0" lean-forward="false" selection-start-line="447" selection-start-column="0" selection-end-line="448" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="docComment;class#Segment1#0" expanded="true" />
+            <element signature="e#1025#1026#0" expanded="true" />
+            <element signature="e#1067#1068#0" expanded="true" />
+            <element signature="e#4106#4107#0" expanded="true" />
+            <element signature="e#4141#4142#0" expanded="true" />
+            <element signature="e#4595#4596#0" expanded="true" />
+            <element signature="e#4631#4632#0" expanded="true" />
+            <element signature="method#combineWord#0;class#Segment1#0" expanded="false" />
+            <element signature="e#7362#7363#0" expanded="true" />
+            <element signature="e#7378#7379#0" expanded="true" />
+            <element signature="e#7411#7412#0" expanded="true" />
+            <element signature="e#7430#7431#0" expanded="true" />
+            <element signature="e#7455#7456#0" expanded="true" />
+            <element signature="e#7473#7474#0" expanded="true" />
+            <element signature="e#7507#7508#0" expanded="true" />
+            <element signature="e#7530#7531#0" expanded="true" />
+            <element signature="e#7574#7575#0" expanded="true" />
+            <element signature="e#7606#7607#0" expanded="true" />
+            <element signature="e#7673#7674#0" expanded="true" />
+            <element signature="e#7724#7725#0" expanded="true" />
+            <element signature="e#7755#7756#0" expanded="true" />
+            <element signature="e#7776#7777#0" expanded="true" />
+            <element signature="e#7819#7820#0" expanded="true" />
+            <element signature="e#7848#7849#0" expanded="true" />
+            <element signature="e#7886#7887#0" expanded="true" />
+            <element signature="e#7914#7915#0" expanded="true" />
+            <element signature="e#7971#7972#0" expanded="true" />
+            <element signature="e#8014#8015#0" expanded="true" />
+            <element signature="e#8045#8046#0" expanded="true" />
+            <element signature="e#8066#8067#0" expanded="true" />
+            <element signature="e#8109#8110#0" expanded="true" />
+            <element signature="e#8138#8139#0" expanded="true" />
+            <element signature="e#8175#8176#0" expanded="true" />
+            <element signature="e#8202#8203#0" expanded="true" />
+            <element signature="e#8257#8258#0" expanded="true" />
+            <element signature="e#8298#8299#0" expanded="true" />
+            <element signature="e#8325#8326#0" expanded="true" />
+            <element signature="e#8342#8343#0" expanded="true" />
+            <element signature="e#8377#8378#0" expanded="true" />
+            <element signature="e#8398#8399#0" expanded="true" />
+            <element signature="e#8423#8424#0" expanded="true" />
+            <element signature="e#8441#8442#0" expanded="true" />
+            <element signature="e#8475#8476#0" expanded="true" />
+            <element signature="e#8498#8499#0" expanded="true" />
+            <element signature="e#8533#8534#0" expanded="true" />
+            <element signature="e#8552#8553#0" expanded="true" />
+            <element signature="e#8597#8598#0" expanded="true" />
+            <element signature="e#8622#8623#0" expanded="true" />
+            <element signature="e#8656#8657#0" expanded="true" />
+            <element signature="e#8674#8675#0" expanded="true" />
+            <element signature="e#8717#8718#0" expanded="true" />
+            <element signature="e#8740#8741#0" expanded="true" />
+            <element signature="e#8776#8777#0" expanded="true" />
+            <element signature="e#8795#8796#0" expanded="true" />
+            <element signature="e#8841#8842#0" expanded="true" />
+            <element signature="e#8866#8867#0" expanded="true" />
+            <element signature="e#8903#8904#0" expanded="true" />
+            <element signature="e#8924#8925#0" expanded="true" />
+            <element signature="e#8973#8974#0" expanded="true" />
+            <element signature="e#9002#9003#0" expanded="true" />
+            <element signature="e#9034#9035#0" expanded="true" />
+            <element signature="e#9054#9055#0" expanded="true" />
+            <element signature="e#9097#9098#0" expanded="true" />
+            <element signature="e#9124#9125#0" expanded="true" />
+            <element signature="e#9154#9155#0" expanded="true" />
+            <element signature="e#9172#9173#0" expanded="true" />
+            <element signature="e#9211#9212#0" expanded="true" />
+            <element signature="e#9234#9235#0" expanded="true" />
+            <element signature="e#9262#9263#0" expanded="true" />
+            <element signature="e#9281#9282#0" expanded="true" />
+            <element signature="e#9319#9320#0" expanded="true" />
+            <element signature="e#9344#9345#0" expanded="true" />
+            <element signature="e#9380#9381#0" expanded="true" />
+            <element signature="e#9402#9403#0" expanded="true" />
+            <element signature="e#9451#9452#0" expanded="true" />
+            <element signature="e#9482#9483#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/beans/Word.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="51" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="9" selection-end-column="51" />
+          <folding>
+            <element signature="e#685#686#0" expanded="true" />
+            <element signature="e#709#710#0" expanded="true" />
+            <element signature="e#858#859#0" expanded="true" />
+            <element signature="e#876#877#0" expanded="true" />
+            <element signature="e#910#911#0" expanded="true" />
+            <element signature="e#933#934#0" expanded="true" />
+            <element signature="e#1268#1269#0" expanded="true" />
+            <element signature="e#1286#1287#0" expanded="true" />
+            <element signature="e#1320#1321#0" expanded="true" />
+            <element signature="e#1343#1344#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tools/FileTools.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="509">
+          <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+          <folding>
+            <element signature="method#readDataFromFiles#1;class#FileTools#0" expanded="false" />
+            <element signature="e#1867#1868#0" expanded="true" />
+            <element signature="e#1910#1911#0" expanded="true" />
+            <element signature="method#writeListToFile#0;class#FileTools#0" expanded="false" />
+            <element signature="method#writeSetToFile#0;class#FileTools#0" expanded="false" />
+            <element signature="method#writeMapToFile#1;class#FileTools#0" expanded="false" />
+            <element signature="method#writeCollectionToFile#0;class#FileTools#0" expanded="false" />
+            <element signature="method#createDir#0;class#FileTools#0" expanded="false" />
+            <element signature="method#mkParentDirs#0;class#FileTools#0" expanded="false" />
+            <element signature="method#replaceBlank#0;class#FileTools#0" expanded="false" />
+            <element signature="method#newTrim#0;class#FileTools#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SentimentAnalysis/Step7.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="140" column="21" lean-forward="false" selection-start-line="140" selection-start-column="21" selection-end-line="140" selection-end-column="21" />
+        <state relative-caret-position="-832">
+          <caret line="44" column="24" lean-forward="false" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;class#Step7#0" expanded="true" />
+            <element signature="method#wordSegment#0;class#Step7#0" expanded="false" />
+            <element signature="method#calSegmentScore#0;class#Step7#0" expanded="false" />
+            <element signature="method#calSentenceScore#0;class#Step7#0" expanded="false" />
+            <element signature="method#calDocumentScore#0;class#Step7#0" expanded="false" />
+            <marker date="1482753824960" expanded="false" signature="1338:1936" ph="{...}" />
+            <marker date="1482753824960" expanded="false" signature="2012:2203" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SentimentAnalysis/Part1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-112">
+          <caret line="84" column="9" lean-forward="false" selection-start-line="81" selection-start-column="8" selection-end-line="84" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#readDocument#0;class#Part1#0" expanded="false" />
           </folding>
         </state>
       </provider>

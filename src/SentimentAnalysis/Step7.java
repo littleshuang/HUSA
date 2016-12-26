@@ -2,22 +2,17 @@ package SentimentAnalysis;
 
 import NLP.Ictclas;
 import NLP.Ltp;
-import beans.ConjWord;
 import beans.Document;
-import beans.Segment;
+import beans.Segment1;
 import beans.Sentence;
 import com.sun.javafx.beans.annotations.NonNull;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static common.Constants.*;
 import static tools.CommonTools.roundFloat;
-import static tools.FileTools.getCurRootPath;
-import static tools.FileTools.readDataToList;
+import static tools.FileTools.*;
 import static tools.Output.println;
 
 /**
@@ -32,14 +27,11 @@ public class Step7 {
 	public static void main(String[] args) {
 		String root = getCurRootPath() + ROOT;        // 根目录
 		String rawDataDir = root + "/raw_data";        // 原始语料
-		String sentencesFile = root + "/sentences.txt";    // 句子
-		String sentenceByConjFile = root + "/sentencesByConj.txt";    // 连词分句
-		// String sentenceConjFile = root + "/sentenceConjType.txt";        // 句子连词类型
-		String wordSegFile = root + "/wordSegment.txt";                // 分词
-		String wordSegWithTagFile = root + "/wordSegmentWithTag.txt";    // 含词性标注的分词
-		String sentiWordsFile = root + "/selectedWords.txt";            // adj adv n v
-		String wordFile = root + "/words.txt";            // 词汇
-		String timeFile = root + "/timeCost.txt";            // 记录时间消耗
+		String posWords = root + "/pattern/posPattern.txt";
+		String negWords = root + "/pattern/negPattern.txt";
+
+		Set<String> posSet = readDataToSet(posWords);
+		Set<String> negSet = readDataToSet(negWords);
 
 		Step7 step7 = new Step7();
 		println("Begin read documents!");
@@ -49,8 +41,11 @@ public class Step7 {
 		println("Begin wordSegment");
 		step7.wordSegment(documents, true);
 		println("Begin calculate segment score!");
+		step7.calDocumentListScore(documents, posSet, negSet);
+		step7.writeInfo(documents, root);
 	}
 
+	// 读取文档数据
 	private List<Document> readDocument(@NonNull String documentPath) {
 		List<Document> documentList = new LinkedList<>();
 
@@ -75,140 +70,179 @@ public class Step7 {
 		return documentList;
 	}
 
-	// 句子连词分句
+	// 句子分词 & 连词分句
 	private void segSentenceByConj(List<Document> documents) {
-		for (Document document : documents) {
-			for (Sentence sentence : document.getSentences()) {
-				sentence.segSentenceByConj();
-			}
-		}
-	}
-
-	// 分词 & 保留特定词
-	private void wordSegment(List<Document> documents, boolean combine) {
 		Ictclas.initNLPIR();
 		for (Document document : documents) {
-			for (Sentence sentences : document.getSentences()) {
-				if (combine) {
-					Ltp.initLtp();
-					for (Segment sentence : sentences.getSegmentList()) {
-						sentence.combineSpecificWords();
-					}
-					Ltp.releaseLtp();
-				} else {
-					for (Segment sentence : sentences.getSegmentList()) {
-						sentence.saveSpecificWords();
-					}
-				}
+			for (Sentence sentence : document.getSentences()) {
+				sentence.segSentenceByConjs();
 			}
 		}
 		Ictclas.ExitIctclas();
 	}
 
-	// 计算子句打分
-	private void calSegmentScore(Segment segment, Set<String> posSet, Set<String> negSet) {
-		String[] words = segment.getSentiWords().split(BLANK);
-		List<String> wordList = Arrays.asList(words);
+	// 保留特定词
+	private void wordSegment(List<Document> documents, boolean combine) {
+		for (Document document : documents) {
+			for (Sentence sentences : document.getSentences()) {
+				if (combine) {
+					Ltp.initLtp();
+					for (Segment1 segment : sentences.getSegmentList()) {
+						segment.combineSpecificWords();
+						// segment.setWordList(genWordList(segment, posSet, negSet));
+					}
+					Ltp.releaseLtp();
+				} else {
+					for (Segment1 segment : sentences.getSegmentList()) {
+						String[] sentiTags = {"a", "d", "n", "nl", "nd", "v", "stock"};
+						segment.saveSpecificWords(sentiTags);
+						// segment.setWordList(genWordList(segment, posSet, negSet));
+					}
+				}
+			}
+		}
+	}
+
+	// 子句得分计算
+	private void calSegmentScore(Segment1 segment, Set<String> posSet, Set<String> negSet) {
+		List<String> words = Arrays.asList(segment.getSelectedWords().split(BLANK));
 
 		int posNum = 0;
 		int negNum = 0;
 		for (String pos : posSet) {
-			if (pos.contains(BLANK) && wordList.contains(pos.split(BLANK))) {
-				posNum++;
-			} else if (wordList.contains(pos)) {
+			String[] posWords;
+			if (pos.contains(BLANK)) {
+				posWords = pos.split(BLANK);
+			} else {
+				posWords = new String[]{pos};
+			}
+			int i = 0;
+			for (String posWord : posWords) {
+				if (words.contains(posWord)) {
+					i++;
+				}
+			}
+			if (i == posWords.length) {
 				posNum++;
 			}
 		}
-
 		for (String neg : negSet) {
-			if (neg.contains(BLANK) && wordList.contains(neg.split(BLANK))) {
-				negNum++;
-			} else if (wordList.contains(neg)) {
+			String[] negWords;
+			if (neg.contains(BLANK)) {
+				negWords = neg.split(BLANK);
+			} else {
+				negWords = new String[]{neg};
+			}
+			int i = 0;
+			for (String posWord : negWords) {
+				if (words.contains(posWord)) {
+					i++;
+				}
+			}
+			if (i == negWords.length) {
 				negNum++;
 			}
 		}
 		segment.setScore(posNum - negNum);
 	}
 
-	private String[] wordType(Segment segment, Set<String> posSet, Set<String> negSet){
-		String[] words = segment.getSentiWords().split(BLANK);
-		String[] types = new String[words.length];
-
-		for (int i = 0; i < words.length; i++){
-			String wordI = words[i];
-
-		}
-		return types;
-	}
+	// 计算子句打分
+	// private void calSegmentScore(Segment1 segment) {
+	// 	int posNum = 0;
+	// 	int negNum = 0;
+	//
+	// 	for (Word word : segment.getWordList()) {
+	// 		if (word.getType() == Word.POS) {
+	// 			posNum++;
+	// 		} else if (word.getType() == Word.NEG) {
+	// 			negNum++;
+	// 		}
+	// 	}
+	//
+	// 	segment.setScore(posNum - negNum);
+	// }
 
 	// 根据连词计算句子打分
-	private void calSentenceScore(Sentence sentence) {
-		List<ConjWord> conjWords = sentence.getConjWordList();
-		List<Segment> segments = sentence.getSegmentList();
+	private void calSentenceScore(Sentence sentence, Set<String> posSet, Set<String> negSet) {
+		List<Segment1> segments = sentence.getSegmentList();
 
-		for (ConjWord conjWord : conjWords) {
-			Segment before = conjWord.getBefore();
-			Segment next = conjWord.getNext();
-			float beforeScore = before.getScore();
-			float nextScore = next.getScore();
-			switch (conjWord.getType()) {
-				case 1:
-					if (nextScore == 0 && beforeScore != 0) {
-						next.setScore(beforeScore);
-					}
-					before.setScore(0);
-					break;
-				case 3:
-					if (nextScore == 0) {
-						next.setScore(-beforeScore);
-					} else if (beforeScore == 0) {
-						before.setScore(-nextScore);
-					} else if ((beforeScore > 0 && nextScore > 0) ||
-							(beforeScore < 0 && nextScore < 0)) {
-						float diff = Math.abs(beforeScore) - Math.abs(nextScore);
-						if (diff > 0) {
-							next.setScore(-nextScore);
-						} else {
-							before.setScore(-beforeScore);
+		for (Segment1 segment : segments) {
+			calSegmentScore(segment, posSet, negSet);
+		}
+
+		for (Segment1 segment : segments) {
+			if (segment.getType() == Segment1.CONJ) {
+				Segment1 before = segment.getBefore();
+				Segment1 next = segment.getNext();
+				float beforeScore = before.getScore();
+				float nextScore = next.getScore();
+				switch (segment.getWordList().get(0).getType()) {
+					case 1:
+						if (nextScore == 0 && beforeScore != 0) {
+							next.setScore(beforeScore);
 						}
-					}
-					break;
-				default:
-					if ((beforeScore > 0 && nextScore < 0) ||
-							(beforeScore < 0 && nextScore > 0)) {
-						float diff = Math.abs(beforeScore) - Math.abs(nextScore);
-						if (diff > 0) {
-							next.setScore(-nextScore);
-						} else {
-							before.setScore(-beforeScore);
+						before.setScore(0);
+						break;
+					case 3:
+						if (nextScore == 0) {
+							next.setScore(-beforeScore);
+						} else if (beforeScore == 0) {
+							before.setScore(-nextScore);
+						} else if ((beforeScore > 0 && nextScore > 0) ||
+								(beforeScore < 0 && nextScore < 0)) {
+							float diff = Math.abs(beforeScore) - Math.abs(nextScore);
+							if (diff > 0) {
+								next.setScore(-nextScore);
+							} else {
+								before.setScore(-beforeScore);
+							}
 						}
-					}
-					break;
+						break;
+					default:
+						if ((beforeScore > 0 && nextScore < 0) ||
+								(beforeScore < 0 && nextScore > 0)) {
+							float diff = Math.abs(beforeScore) - Math.abs(nextScore);
+							if (diff > 0) {
+								next.setScore(-nextScore);
+							} else {
+								before.setScore(-beforeScore);
+							}
+						}
+						break;
+				}
 			}
 		}
 
 		float score = 0f;
-		for (Segment segment : segments){
+		for (Segment1 segment : segments) {
 			score += segment.getScore();
 		}
-
 		sentence.setScore(score);
 	}
 
 	// 计算文档打分
-	private float calDocumentScore(Document document) {
+	private float calDocumentScore(Document document, Set<String> posSet, Set<String> negSet) {
 		List<Sentence> sentences = document.getSentences();
 		float score = 0f;
 		for (Sentence sentence : sentences) {
-			calSentenceScore(sentence);
+			calSentenceScore(sentence, posSet, negSet);
 			score += sentence.getScore();
 		}
 		return roundFloat(score / sentences.size(), 2);
 	}
 
-	private void getInfo(List<Document> documents, List<String> analysisInfo, List<String> finalInfo){
+	// 计算文档集的得分
+	private void calDocumentListScore(List<Document> documents,
+									  Set<String> posSet, Set<String> negSet){
+		for (Document document : documents){
+			calDocumentScore(document, posSet, negSet);
+		}
+	}
 
-		for (Document doc : documents){
+	private void writeInfo(List<Document> documents, String path) {
+		List<String> analysisInfo = new ArrayList<>();
+		List<String> finalInfo = new ArrayList<>();
+		for (Document doc : documents) {
 			StringBuilder docSb = new StringBuilder();
 			docSb.append(doc.getTitle());
 			docSb.append(SEG);
@@ -216,7 +250,7 @@ public class Step7 {
 			docSb.append(SEG);
 			docSb.append(doc.getScore());
 			finalInfo.add(docSb.toString());
-			for (Sentence sentence : doc.getSentences()){
+			for (Sentence sentence : doc.getSentences()) {
 				docSb.append(NEWLINE);
 				docSb.append(sentence.getContent());
 				docSb.append(SEG);
@@ -224,10 +258,8 @@ public class Step7 {
 			}
 			analysisInfo.add(docSb.toString());
 		}
+
+		writeListToFile(path + "analysisInfo.txt", analysisInfo);
+		writeListToFile(path + "finalInfo.txt", finalInfo);
 	}
-
-	private void writeInfo(String path, List<Document> documents) {
-
-	}
-
 }
